@@ -1,0 +1,309 @@
+﻿@using Station.ViewModel
+@model DashboardViewModel
+@{
+	ViewData["Title"] = "Index";
+	Layout = "_layout";
+}
+
+<style>
+	/* General styles */
+	.page-wrapper {
+		padding: 20px;
+		border: 1px solid #ddd; /* Add border */
+		border-radius: 10px; /* Rounded corners */
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Reduced shadow */
+	}
+
+	.content.container-fluid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 20px;
+	}
+
+	.card {
+		background-color: #fff;
+		border-radius: 10px;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		transition: transform 0.3s ease;
+		width: 200px;
+	}
+
+		.card:hover {
+			transform: translateY(-5px);
+		}
+
+	.card-body {
+		padding: 20px;
+	}
+
+	.db-info {
+		font-size: 1.2rem;
+		font-weight: bold;
+		margin-bottom: 10px;
+		align-items: center;
+		text-align: center;
+	}
+
+	.db-icon {
+		text-align: center;
+	}
+
+		.db-icon img {
+			width: 50px;
+			height: 50px;
+		}
+
+	.carrightm {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.ee {
+		margin-right: 40px
+	}
+</style>
+@if (User.IsInRole(clsRole.roleadmin))
+{
+
+
+	<div class="page-wrapper">
+		<div class="content container-fluid">
+			<div class="row1">
+				<div class="col-sm-12">
+					<div class="page-sub-header">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-3 col-sm-6 col-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="db-widgets">
+								<div class="db-icon">
+									<img src="~/assets/img/icons/dash-icon-01.svg" alt="Dashboard Icon">
+								</div>
+								<div class="db-info">
+									<div>
+										@Html.ActionLink("الفــروع", "Index", "Branch")
+									</div>
+
+									<h4 class="badge badge-pill badge-light-success mr-1 mb-1">@Model.PointCount</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-sm-6 col-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="db-widgets">
+								<div class="db-icon">
+									<img src="~/assets/img/icons/dash-icon-02.svg" alt="Dashboard Icon">
+								</div>
+								<div class="db-info">
+									<div>
+										@Html.ActionLink("العــدادات", "Index", "Meter")
+									</div>
+
+									<h4 class="badge badge-pill badge-light-success mr-1 mb-1">@Model.MeterCount</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-sm-6 col-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="db-widgets">
+								<div class="db-icon">
+									<img src="~/assets/img/icons/dash-icon-03.svg" alt="Dashboard Icon">
+								</div>
+								<div class="db-info">
+									<div>
+										@Html.ActionLink("المشتـركين", "Index", "Subscribers")
+									</div>
+
+									<h4 class="badge badge-pill badge-light-success mr-1 mb-1">@Model.SubscriberCount</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-sm-6 col-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="db-widgets">
+								<div class="db-icon">
+									<img src="~/assets/img/icons/dash-icon-04.svg" alt="Dashboard Icon">
+								</div>
+								<div class="db-info">
+									<div>
+										@Html.ActionLink("النقاط", "Index", "Item")
+									</div>
+									<h4 class="badge badge-pill badge-light-success mr-1 mb-1">@Model.ItemCount</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="page-sub-header">
+					</div>
+				</div>
+			</div>
+			<div class="row ee">
+				<div class="col-xl-3 col-sm-6 col-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="db-widgets">
+								<div class="db-icon">
+									<img src="~/assets/img/icons/dash-icon-04.svg" alt="Dashboard Icon">
+								</div>
+								<div class="db-info">
+									<div>
+										@Html.ActionLink("الفواتير المدفوعة", "Index", "Item")
+									</div>
+									<h4 class="badge badge-pill badge-light-success mr-1 mb-1">@Model.TotalBillsPaid</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-sm-6 col-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="db-widgets">
+								<div class="db-icon">
+									<img src="~/assets/img/icons/dash-icon-04.svg" alt="Dashboard Icon">
+								</div>
+								<div class="db-info">
+									<div>
+										@Html.ActionLink("الفواتير الغير مدفوعة", "Index", "Item")
+									</div>
+									<h4 class="badge badge-pill badge-light-danger mr-1 mb-1">@Model.TotalBillsUnpaid</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-sm-6 col-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="db-widgets">
+								<div class="db-icon">
+									<img src="~/assets/img/icons/dash-icon-04.svg" alt="Dashboard Icon">
+								</div>
+								<div class="db-info">
+									<div>
+										@Html.ActionLink("المبالغ غيرالمحصلة ", "Index", "Item")
+									</div>
+									<h4 class="badge badge-pill badge-light-danger mr-1 mb-1">@Model.TotalAmountUnCollected</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-sm-6 col-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="db-widgets">
+								<div class="db-icon">
+									<img src="~/assets/img/icons/dash-icon-04.svg" alt="Dashboard Icon">
+								</div>
+								<div class="db-info">
+									<div>
+										@Html.ActionLink("المبالغ  المحصلة ", "Index", "Item")
+									</div>
+									<h4 class="badge badge-pill badge-light-success mr-1 mb-1">@Model.TotalAmountCollected</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+else
+{
+
+	<div class="page-wrapper">
+		<div class="content container-fluid">
+			<div class="row1">
+				<div class="col-sm-12">
+					<div class="page-sub-header">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-3 col-sm-6 col-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="db-widgets">
+								<div class="db-icon">
+									<img src="~/assets/img/icons/dash-icon-01.svg" alt="Dashboard Icon">
+								</div>
+								<div class="db-info">
+									<h4>الفروع</h4>
+									<h3>@Model.PointCount</h3>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-sm-6 col-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="db-widgets">
+								<div class="db-icon">
+									<img src="~/assets/img/icons/dash-icon-02.svg" alt="Dashboard Icon">
+								</div>
+								<div class="db-info">
+									<h4>العدادات</h4>
+									<h3>@Model.MeterCount</h3>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-sm-6 col-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="db-widgets">
+								<div class="db-icon">
+									<img src="~/assets/img/icons/dash-icon-03.svg" alt="Dashboard Icon">
+								</div>
+								<div class="db-info">
+									<h5>المشتركين</h5>
+									<h3>@Model.SubscriberCount</h3>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-sm-6 col-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="db-widgets">
+								<div class="db-icon">
+									<img src="~/assets/img/icons/dash-icon-04.svg" alt="Dashboard Icon">
+								</div>
+								<div class="db-info">
+									<h4>النقاط</h4>
+									<h4 class="badge badge-pill badge-light-success mr-1 mb-1">@Model.ItemCount</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+@section Scripts{
+<partial name="_ValidationScriptsPartial"></partial>
+}

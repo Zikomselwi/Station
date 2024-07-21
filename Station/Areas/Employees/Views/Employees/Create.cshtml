@@ -1,0 +1,92 @@
+﻿@model Station.Models.Employee
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-12 mb-2 mt-1">
+                <div class="breadcrumbs-top">
+                    <div class="breadcrumb-wrapper d-none d-sm-block">
+                        <ol class="breadcrumb p-0 mb-0 pl-1">
+                            <li class="breadcrumb-item">
+                                <a href="index.html"><i class="bx bx-home-alt"></i></a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a asp-action="Index">Employees</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                Create Employee
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"> Create New Employee</h3>
+            </div>
+            <div class="card-body mt-2">
+                <form asp-action="Create" class="wizard-horizontal wizard clearfix" role="application" id="steps-uid-0">
+                    <fieldset id="steps-uid-0-p-0" role="tabpanel" aria-labelledby="steps-uid-0-h-0" class="body">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label asp-for="EmployeeName" class="control-label">Name</label>
+                                    <input asp-for="EmployeeName" class="form-control" placeholder="Enter name">
+                                    <span asp-validation-for="EmployeeName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label asp-for="EmployeePhone" class="control-label">Phone</label>
+                                    <input asp-for="EmployeePhone" class="form-control" placeholder="Enter phone number">
+                                    <span asp-validation-for="EmployeePhone" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label asp-for="EmployeeEmail" class="control-label">Email</label>
+                                    <input asp-for="EmployeeEmail" class="form-control" placeholder="Enter email">
+                                    <span asp-validation-for="EmployeeEmail" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label asp-for="EmployeeAge" class="control-label">Age</label>
+                                    <input asp-for="EmployeeAge" class="form-control" placeholder="Enter age">
+                                    <span asp-validation-for="EmployeeAge" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label asp-for="EmployeeSalary" class="control-label">Salary</label>
+                                    <input asp-for="EmployeeSalary" class="form-control" placeholder="Enter salary">
+                                    <span asp-validation-for="EmployeeSalary" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary glow mr-1 mb-1" style="width:150px">Save</button>
+                                    &nbsp;
+                                    <a asp-action="Index" class="btn btn-light glow mr-1 mb-1" style="width:150px">Back</a>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

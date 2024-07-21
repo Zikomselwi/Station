@@ -1,0 +1,114 @@
+﻿@model Station.ViewModel.BillViewModel
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>تفاصيل الفاتورة</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            direction: rtl;
+            text-align: right;
+        }
+        .invoice {
+            padding: 30px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .invoice header {
+            padding: 10px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #3989c6;
+        }
+        .invoice .invoice-details {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .invoice main {
+            padding-bottom: 50px;
+        }
+        .invoice footer {
+            text-align: center;
+            color: #777;
+            border-top: 1px solid #aaa;
+            padding: 8px 0;
+        }
+        .invoice table {
+            width: 100%;
+            margin-bottom: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-collapse: collapse;
+        }
+        .invoice table th,
+        .invoice table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        .invoice .invoice-to {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .invoice .name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .invoice .address {
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice">
+        <header>
+            <h2>تفاصيل الفاتورة</h2>
+        </header>
+        <main>
+            <div class="invoice-details">
+                <div class="invoice-to">
+                    <h2 class="name">@Model.SubscriberName</h2> <!-- Updated line -->
+                    <div class="address">@Model.SubscriptionType</div>
+                </div>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>نوع الاشتراك</th>
+                            <td>@Model.SubscriptionType</td>
+                        </tr>
+                        <tr>
+                            <th>رقم الفاتورة</th>
+                            <td>@Model.numberbill</td>
+                        </tr>
+                        <tr>
+                            <th>القراءة الحالية</th>
+                            <td>@Model.CurrentReading</td>
+                        </tr>
+                        <tr>
+                            <th>القراءة السابقة</th>
+                            <td>@Model.PreviousReading</td>
+                        </tr>
+                        <tr>
+                            <th>فرق الاستهلاك</th>
+                            <td>@Model.ConsumptionDifference</td>
+                        </tr>
+                        <tr>
+                            <th>تكلفة الاستهلاك</th>
+                            <td>@Model.ConsumptionCost</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <footer>
+            <p>شكراً لاستخدامك نظام الفواتير لدينا!</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,369 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity.UI.Services
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.Razor
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
+<html class="loading" lang="ar" data-textdirection="rtl">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="description" content="Frest admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Frest admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="PIXINVENT">
+    <title>محطة سيان </title>
+    <link rel="apple-touch-icon" href="~/app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="~/app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/vendors-rtl.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/charts/apexcharts.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/extensions/dragula.min.css">
+    <!-- END: Vendor CSS-->
+     <link rel="apple-touch-icon" href="~/app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="~/app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="~/assets/toastr.js/toastr.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/vendors-rtl.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css">
+    <!-- END: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/vendors-rtl.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/charts/apexcharts.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/pickers/daterange/daterangepicker.css">
+    <!-- END: Vendor CSS-->
+    <link href="~/lib/animate.css/animate.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css-rtl/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css-rtl/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css-rtl/colors.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css-rtl/components.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css-rtl/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css-rtl/themes/semi-dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css-rtl/custom-rtl.css">
+    <!-- END: Theme CSS-->
+        <link rel="apple-touch-icon" href="~/app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="~/app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/vendors-rtl.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/extensions/sweetalert2.min.css">
+    <!-- BEGIN: Page CSS-->
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/style-rtl.css">
+ 
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css-rtl/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css-rtl/pages/widgets.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css-rtl/pages/dashboard-analytics.css">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<body class="vertical-layout vertical-menu-modern boxicon-layout no-card-shadow 2-columns  navbar-sticky footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+
+    <!-- BEGIN: Header-->
+    <div class="header-navbar-shadow"></div>
+    <nav class="header-navbar main-header-navbar navbar-expand-lg navbar navbar-with-menu fixed-top ">
+        <div class="navbar-wrapper">
+            <div class="navbar-container content">
+                <div class="navbar-collapse" id="navbar-mobile">
+                    <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item mobile-menu d-xl-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="javascript:void(0);"><i class="ficon bx bx-menu"></i></a></li>
+                        </ul>
+                     
+                        
+                    </div>
+                    <ul class="nav navbar-nav float-right">
+                       
+                        <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon bx bx-fullscreen"></i></a></li>
+                        <li class="nav-item nav-search"><a class="nav-link nav-link-search"><i class="ficon bx bx-search"></i></a>
+                            <div class="search-input">
+                                <div class="search-input-icon"><i class="bx bx-search primary"></i></div>
+                                <input class="input" type="text" placeholder="Explore Frest..." tabindex="-1" data-search="template-search">
+                                <div class="search-input-close"><i class="bx bx-x"></i></div>
+                                <ul class="search-list"></ul>
+                            </div>
+                        </li>
+@{
+if(User.Identity.IsAuthenticated)
+{
+    <li class="dropdown dropdown-user nav-item">
+        <a class="dropdown-toggle nav-link dropdown-user-link" href="javascript:void(0);" data-toggle="dropdown">
+            <div class="user-nav d-sm-flex d-none">
+                <span class="user-name">@User.Identity.Name</span>
+                <span class="user-status text-muted">Available</span>
+            </div>
+            <span>
+                <img class="round" src="~/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40">
+            </span>
+        </a>
+       <div class="dropdown-menu dropdown-menu-right pb-0">
+    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/EditProfile">
+        <i class="bx bx-user mr-50"></i> تعديل الملف الشحصي
+    </a>
+    <div class="dropdown-divider mb-0"></div>
+    <form asp-area="Identity" asp-page="/Account/Logout" method="post" id="logoutForm">
+        <button class="nav-link btn btn-link text-dark bx bx-power-off mr-50" type="button" onclick="logout()">تسجيل الخروج</button>
+    </form>
+</div>
+
+
+
+
+    </li>
+    }
+   else {
+
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-page="/Account/Login">دخول</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-page="/Account/Register">تسجيل</a>
+    </li>
+
+    }}
+                    </ul>
+              </div>
+            </div>
+        </div>
+    </nav>
+    <!-- END: Header-->
+
+
+    <!-- BEGIN: Main Menu-->
+    <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav flex-row">
+                <li class="nav-item mr-auto"><a class="navbar-brand" href="~/html/rtl/vertical-menu-boxicons-template/index.html">
+                        <div class="brand-logo">
+                            <svg class="logo" width="26px" height="26px" viewbox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <title>icon</title>
+                                <defs>
+                                    <lineargradient id="linearGradient-1" x1="50%" y1="0%" x2="50%" y2="100%">
+                                        <stop stop-color="#5A8DEE" offset="0%"></stop>
+                                        <stop stop-color="#699AF9" offset="100%"></stop>
+                                    </lineargradient>
+                                    <lineargradient id="linearGradient-2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop stop-color="#FDAC41" offset="0%"></stop>
+                                        <stop stop-color="#E38100" offset="100%"></stop>
+                                    </lineargradient>
+                                </defs>
+                                <g id="Sprite" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <g id="sprite" transform="translate(-69.000000, -61.000000)">
+                                        <g id="Group" transform="translate(17.000000, 15.000000)">
+                                            <g id="icon" transform="translate(52.000000, 46.000000)">
+                                                <path id="Combined-Shape" d="M13.5909091,1.77272727 C20.4442608,1.77272727 26,7.19618701 26,13.8863636 C26,20.5765403 20.4442608,26 13.5909091,26 C6.73755742,26 1.18181818,20.5765403 1.18181818,13.8863636 C1.18181818,13.540626 1.19665566,13.1982714 1.22574292,12.8598734 L6.30410592,12.859962 C6.25499466,13.1951893 6.22958398,13.5378796 6.22958398,13.8863636 C6.22958398,17.8551125 9.52536149,21.0724191 13.5909091,21.0724191 C17.6564567,21.0724191 20.9522342,17.8551125 20.9522342,13.8863636 C20.9522342,9.91761479 17.6564567,6.70030817 13.5909091,6.70030817 C13.2336969,6.70030817 12.8824272,6.72514561 12.5388136,6.77314791 L12.5392575,1.81561642 C12.8859498,1.78721495 13.2366963,1.77272727 13.5909091,1.77272727 Z"></path>
+                                                <path id="Combined-Shape" d="M13.8863636,4.72727273 C18.9447899,4.72727273 23.0454545,8.82793741 23.0454545,13.8863636 C23.0454545,18.9447899 18.9447899,23.0454545 13.8863636,23.0454545 C8.82793741,23.0454545 4.72727273,18.9447899 4.72727273,13.8863636 C4.72727273,13.5378966 4.74673291,13.1939746 4.7846258,12.8556254 L8.55057141,12.8560055 C8.48653249,13.1896162 8.45300462,13.5340745 8.45300462,13.8863636 C8.45300462,16.887125 10.8856023,19.3197227 13.8863636,19.3197227 C16.887125,19.3197227 19.3197227,16.887125 19.3197227,13.8863636 C19.3197227,10.8856023 16.887125,8.45300462 13.8863636,8.45300462 C13.529522,8.45300462 13.180715,8.48740462 12.8430777,8.55306931 L12.8426531,4.78608796 C13.1851829,4.7472336 13.5334422,4.72727273 13.8863636,4.72727273 Z" fill="#4880EA"></path>
+                                                <path id="Combined-Shape" d="M13.5909091,1.77272727 C20.4442608,1.77272727 26,7.19618701 26,13.8863636 C26,20.5765403 20.4442608,26 13.5909091,26 C6.73755742,26 1.18181818,20.5765403 1.18181818,13.8863636 C1.18181818,13.540626 1.19665566,13.1982714 1.22574292,12.8598734 L6.30410592,12.859962 C6.25499466,13.1951893 6.22958398,13.5378796 6.22958398,13.8863636 C6.22958398,17.8551125 9.52536149,21.0724191 13.5909091,21.0724191 C17.6564567,21.0724191 20.9522342,17.8551125 20.9522342,13.8863636 C20.9522342,9.91761479 17.6564567,6.70030817 13.5909091,6.70030817 C13.2336969,6.70030817 12.8824272,6.72514561 12.5388136,6.77314791 L12.5392575,1.81561642 C12.8859498,1.78721495 13.2366963,1.77272727 13.5909091,1.77272727 Z" fill="url(#linearGradient-1)"></path>
+                                                <rect id="Rectangle" x="0" y="0" width="7.68181818" height="7.68181818"></rect>
+                                                <rect id="Rectangle" fill="url(#linearGradient-2)" x="0" y="0" width="7.68181818" height="7.68181818"></rect>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                        <h2 class="brand-text mb-0">محطـة سيـان</h2>
+                    </a></li>
+                <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="bx bx-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon bx bx-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary" data-ticon="bx-disc"></i></a></li>
+            </ul>
+        </div>
+        <div class="shadow-bottom"></div>
+        <div class="main-menu-content">
+
+            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="">
+                <li class=" nav-item"><a asp-action="Index" asp-controller="Home"><i class="bx bx-home-alt"></i><span class="menu-title text-truncate" data-i18n="Dashboard">الصفحة الرئيسية</span><span class="badge badge-light-danger badge-pill badge-round float-right mr-50 ml-auto">2</span></a>
+                    
+                </li>
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class=" nav-item"><a href="#"><i class="bx bxs-joystick-button"></i><span class="menu-title text-truncate" data-i18n="Invoice">الفروع</span></a>
+                        <ul class="menu-content">
+                            <li><a asp-action="Index"  asp-controller="branch" class="d-flex align-items-center" ><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice List">قائمة الفروع</span></a>
+
+                            </li>
+                            <li><a asp-action="New" asp-controller="branch" class="d-flex align-items-center" ><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice Add"> إضافة فروع</span></a>
+                            </li>
+                        </ul>
+                    </li>  
+                    <li class=" nav-item"><a href="#"><i class="bx bx-map"></i><span class="menu-title text-truncate" data-i18n="Invoice">النقاط</span></a>
+                        <ul class="menu-content">
+                            <li><a   asp-action="Index" asp-controller="Item"class="d-flex align-items-center" ><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice List">قائمة النقاط</span></a>
+
+                            </li>
+                            <li><a class="d-flex align-items-center" asp-action="New" asp-controller="Item"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice Add"> إضافة النقاط</span></a>
+                            </li>
+                        </ul>
+                    </li> 
+                    <li class=" nav-item"><a href="#"><i class="bx bxs-building"></i><span class="menu-title text-truncate" data-i18n="Invoice">العدادات</span></a>
+                        <ul class="menu-content">
+                            <li><a   asp-action="Index" asp-controller="Meters"class="d-flex align-items-center" ><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice List">قائمة العدادات</span></a>
+
+                            </li>
+                            <li><a class="d-flex align-items-center" asp-action="Create" asp-controller="Meters"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice Add"> إضافة العدادات</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class=" nav-item"><a href="#"><i class="bx bx-sitemap"></i><span class="menu-title text-truncate" data-i18n="Invoice">المشركين</span></a>
+                        <ul class="menu-content">
+                            <li><a   asp-action="Index" asp-controller="Subscribers"class="d-flex align-items-center" ><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice List">قائمة المشركين</span></a>
+
+                            </li>
+                            <li><a class="d-flex align-items-center" asp-action="Create" asp-controller="Subscribers"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice Add"> إضافة المشركين</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class=" nav-item"><a href="#"><i class="bx bxs-receipt"></i><span class="menu-title text-truncate" data-i18n="Invoice">القراءات</span></a>
+                        <ul class="menu-content">
+                            <li><a   asp-action="Index" asp-controller="Reading"class="d-flex align-items-center" ><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice List">قائمة القراءات</span></a>
+
+                            </li>
+                            <li><a class="d-flex align-items-center" asp-action="Create" asp-controller="Reading"><i class="bx bx-right-arrow-alt"></i><span class="menu-item read-notification" data-i18n="Invoice Add"> إضافة القراءات</span></a>
+                            </li>
+                        </ul>
+                    </li> 
+                    <li class=" nav-item"><a href="#"><i class="bx bxs-book-open"></i><span class="menu-title text-truncate" data-i18n="Invoice">الفواتير</span></a>
+                        <ul class="menu-content">
+
+                            <li><a class="d-flex align-items-center" asp-action="Index" asp-controller="Bill"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice Add"> عرض الفواتير</span></a>
+                            </li> <li><a class="d-flex align-items-center"asp-controller="Bill" asp-action="Create"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice Add"> إضافة الفواتير</span></a>
+                            </li>
+                        </ul>
+                    </li> 
+                    <li class=" nav-item"><a href="#"><i class="bx bx-file"></i><span class="menu-title text-truncate" data-i18n="Invoice">التقارير</span></a>
+                        <ul class="menu-content">
+                            <li><a   asp-action="Index" asp-controller="Reports"class="d-flex align-items-center" ><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice List">قائمة التقارير</span></a>
+
+                            </li>
+
+                        </ul>
+                    </li>  <li class=" nav-item"><a href="#"><i class="bx bx-wrench"></i><span class="menu-title text-truncate" data-i18n="Invoice">الصلاحيــيات</span></a>
+                        <ul class="menu-content">
+                            <li><a   asp-area="" asp-controller="Roles" asp-action="Index"class="d-flex align-items-center" ><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice List">قائمة التقارير</span></a>
+
+                            </li>
+
+                        </ul>
+                    </li>
+                }
+                @if(User.IsInRole(clsRole.roleauser))
+                {
+                     <li class=" nav-item"><a href="#"><i class="bx bxs-receipt"></i><span class="menu-title text-truncate" data-i18n="Invoice">القراءات</span></a>
+                        <ul class="menu-content">
+                            <li><a   asp-action="Index" asp-controller="Reading"class="d-flex align-items-center" ><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Invoice List">قائمة القراءات</span></a>
+
+                            </li>
+                            <li><a class="d-flex align-items-center" asp-action="Create" asp-controller="Reading"><i class="bx bx-right-arrow-alt"></i><span class="menu-item read-notification" data-i18n="Invoice Add"> إضافة القراءات</span></a>
+                            </li>
+                        </ul>
+                    </li> 
+                    
+                }
+            </ul>
+         
+        </div>
+        </div>
+    
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+   
+                <!-- Dashboard Analytics end -->
+
+      D: Content-->
+
+   
+    <!-- BEGIN: Footer-->
+    @RenderBody()
+
+</body>
+   
+@section Scripts {
+    <script>
+        function logout() {
+            document.getElementById('logoutForm').submit();
+        }
+    </script>}
+<script src="~/assets/toastr.js/toastr.min.js"></script>
+
+    <script src="~/app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="~/app-assets/vendors/js/extensions/dragula.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="~/app-assets/js/scripts/pages/dashboard-analytics.js"></script>
+    <!-- END: Page JS-->
+    <!-- BEGIN: Vendor JS-->
+    <script src="~/app-assets/vendors/js/vendors.min.js"></script>
+    <script src="~/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.js"></script>
+    <script src="~/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js"></script>
+    <script src="~/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="~/app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/app-assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js"></script>
+    <script src="~/app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js"></script>
+    <script src="~/app-assets/vendors/js/tables/datatable/buttons.html5.min.js"></script>
+    <script src="~/app-assets/vendors/js/tables/datatable/buttons.print.min.js"></script>
+    <script src="~/app-assets/vendors/js/tables/datatable/buttons.bootstrap4.min.js"></script>
+    <script src="~/app-assets/vendors/js/tables/datatable/pdfmake.min.js"></script>
+    <script src="~/app-assets/vendors/js/tables/datatable/vfs_fonts.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="~/app-assets/js/core/app-menu.js"></script>
+    <script src="~/app-assets/js/core/app.js"></script>
+    <script src="~/app-assets/js/scripts/components.js"></script>
+    <script src="~/app-assets/js/scripts/footer.js"></script>
+    <!-- END: Theme JS-->
+
+
+
+            <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+    <script src="~/app-assets/vendors/js/extensions/polyfill.min.js"></script>
+                <script src="~/app-assets/js/scripts/extensions/sweet-alerts.js"></script>
+                    <script src="~/app-assets/js/scripts/pages/table-extended.js"></script>
+
+    <!-- BEGIN: Page JS-->
+    <script src="~/app-assets/js/scripts/datatables/datatable.js"></script>
+      <script>
+        document.getElementById("logoutButton").addEventListener("click", function() {
+            document.getElementById("logoutForm").submit();
+        });
+    </script>
+
+@RenderSection("Scripts", required: false)
+
+    <!-- END: Page JS-->
+<!-- END: Body-->
+
+</html>

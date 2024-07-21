@@ -1,0 +1,363 @@
+﻿@*@using Station.Data
+@model Station.Models.BillViewModel
+
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col-sm-12">
+                    <div class="page-sub-header">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="@Url.Action("Index", "Bill")">Bills</a>
+                            </li>
+                            <li class="breadcrumb-item">Create Bill</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card comman-shadow">
+                    <div class="card-body">
+                        <form id="billForm" method="post" asp-action="GetBillDetails">
+
+                            <div class="row mb-3">
+                                <div class="col-md-3">
+                                    <label for="pointId" class="form-label">النقاط</label>
+                                    <select class="form-control" id="pointId" name="pointId">
+                                        <option value="">اختر النقطة</option>
+                                        @foreach (var item in Model.Items)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="meterId" class="form-label">العداد</label>
+                                    <select class="form-control" id="meterId" name="meterId">
+                                        <option value="">اختر العداد</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-md-2">
+                                    <label for="printButton" class="form-lable">&nbsp</label>
+                                    <button type="button" class="btn info form-control"id="printButton">طباعة</button>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-2">
+                                    <label for="subscriberName" class="form-label">اسم المشترك</label>
+                                    <input type="text" class="form-control" id="subscriberName" name="subscriberName" readonly>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="currentReading" class="form-label">القراءة الحالية</label>
+                                    <input type="text" class="form-control" id="currentReading" name="currentReading" readonly>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="previousReading" class="form-label">القراءة السابقة</label>
+                                    <input type="text" class="form-control" id="previousReading" name="previousReading" readonly>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="consumptionDifference" class="form-label">الفارق</label>
+                                    <input type="text" class="form-control" id="consumptionDifference" name="consumptionDifference" readonly>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="consumptionCost" class="form-label">كمية الاستهلاك</label>
+                                    <input type="text" class="form-control" id="consumptionCost" name="consumptionCost" readonly>
+                                </div>
+                          
+
+                            
+                                <div class="col-md-2">
+                                    <label for="subscriptionType" class="form-label">نوع الاشتراك</label>
+                                    <input type="text" class="form-control" id="subscriptionType" name="subscriptionType" readonly>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-12 text-end">
+                                    <button type="submit" class="btn btn-primary">إنشاء الفاتورة</button>
+                                </div>
+                            </div>
+
+                        </form>
+                        <a href="@Url.Action("DeleteAllBills", "Bill")" class="btn btn-danger">Delete All Bills</a>
+
+                        
+                        <div class="invoice-add-table">
+                            <div class="table-responsive" dir="rtl">
+                                <table class="table table-center add-table-items" id="invoiceTable">
+                                    <thead>
+                                        <tr>
+                                            <th>اسم المشترك</th>
+                                            <th>القراءة الحالية</th>
+                                            <th>كمية الاستهلاك</th>
+                                            <th>تاريخ الفاتورة</th>
+                                            <th>القراءة السابقة</th>
+                                            <th>تكلفة الاستهلاك</th>
+                                            <th>حالة الدفع</th>
+                                            <th>إجراءات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var bill in Model.Bills)
+                                        {
+                                            <tr>
+                                                <td>@bill.SubscriberName</td>
+                                                <td>@bill.CurrentReading</td>
+                                                <td>@bill.ConsumptionDifference</td>
+                                                <td>@bill.BillDate.ToShortDateString()</td>
+                                                <td>@bill.PreviousReading</td>
+                                                <td>@bill.ConsumptionCost</td>
+                                                <td>@(bill.IsPaid ? "نعم" : "لا")</td>
+                                                <td>
+                                                    <a href="@Url.Action("EditBill", "Bill", new { id = @bill.Id })" class="btn btn-warning btn-sm edit-btn">تعديل</a>
+                                                    <button class="btn btn-danger btn-sm delete-btn" data-bill-id="@bill.Id">حذف</button>
+                                                </td>
+                                                 <td>
+                                                    @if (!bill.IsPaid)
+                                                    {
+                                                        <button class="btn btn-success btn-sm mark-paid-btn" data-bill-id="@bill.Id">تحديث كمدفوع</button>
+                                                    }
+                                                </td>
+                                                <td>
+    <button class="btn btn-success btn-sm send-whatsapp" data-bill-id="@bill.Id">إرسال عبر WhatsApp</button>
+</td>
+
+                                            </tr>
+                                            }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+        <script>
+        $(document).ready(function () {
+            $('.mark-paid-btn').on('click', function () {
+                var billId = $(this).data('bill-id');
+                $.ajax({
+                    url: '@Url.Action("MarkAsPaid", "Bill")',
+                    type: 'POST',
+                    data: { billId: billId },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.success) {
+                                                                        location.reload();
+
+                            // Update the UI to reflect the payment status change
+                            var row = $('#invoiceTable').find('tr[data-bill-id="' + billId + '"]');
+                            row.find('td:nth-child(7)').text('نعم'); // Update payment status cell
+                            row.find('td:last-child').empty(); // Remove action buttons
+                            toastr.success('تم تحديث حالة الدفع بنجاح.');
+                        } else {
+                            toastr.error('فشل في تحديث حالة الدفع.');
+                        }
+                    },
+                    error: function () {
+                        toastr.error('حدث خطأ أثناء إرسال الطلب.');
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#pointId').change(function () {
+                var pointId = $(this).val();
+                if (pointId) {
+                    $.ajax({
+                        url: '@Url.Action("GetMeter", "Bill")',
+                        data: { pointId: pointId },
+                        success: function (data) {
+                            var meterDropdown = $('#meterId');
+                            meterDropdown.empty();
+                            meterDropdown.append($('<option></option>').val('').text('اختر العداد'));
+                            $.each(data, function (index, item) {
+                                meterDropdown.append($('<option></option>').val(item.value).text(item.text));
+                            });
+                        }
+                    });
+                } else {
+                    $('#meterId').empty();
+                    $('#meterId').append($('<option></option>').val('').text('اختر العداد'));
+                }
+            });
+
+            $('#meterId').change(function () {
+                var meterId = $(this).val();
+                if (meterId) {
+                    $.ajax({
+                        url: '@Url.Action("GetBillDetails", "Bill")',
+                        data: { meterId: meterId },
+                        type: 'POST',
+                        dataType: 'json',
+                        success: function (data) {
+                            $('#subscriberName').val(data.subscriberName);
+                            $('#currentReading').val(data.currentReading);
+                            $('#previousReading').val(data.previousReading);
+                            $('#subscriptionType').val(data.subscriptionType);
+                            $('#consumptionDifference').val(data.consumptionDifference);
+                            $('#consumptionCost').val(data.consumptionCost.toFixed(2));
+                        }
+                    });
+                } else {
+                    $('#subscriberName').val('');
+                    $('#currentReading').val('');
+                    $('#previousReading').val('');
+                    $('#subscriptionType').val('');
+                    $('#consumptionDifference').val('');
+                    $('#consumptionCost').val('');
+                }
+            });
+           
+            $('#billForm').submit(function (event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    url: '@Url.Action("SubmitBill", "Bill")',
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.success) {
+                        location.reload();
+
+                            var bill = data.bill;
+                            var row = $('<tr>');
+                            row.append($('<td>').text(bill.SubscriberName));
+                            row.append($('<td>').text(bill.CurrentReading));
+                            row.append($('<td>').text(bill.ConsumptionDifference));
+                            row.append($('<td>').text(new Date(bill.BillDate).toLocaleDateString()));
+                            row.append($('<td>').text(bill.PreviousReading));
+                            row.append($('<td>').text(bill.ConsumptionCost.toFixed(2)));
+                            row.append($('<td>').text(bill.IsPaid ? 'نعم' : 'لا'));
+                            var actions = $('<td>');
+                            actions.append($('<a>').addClass('btn btn-warning btn-sm edit-btn').text('تعديل').attr('href', '@Url.Action("EditBill", "Bill")/' + bill.Id));
+                            actions.append($('<button>').addClass('btn btn-danger btn-sm delete-btn').text('حذف').attr('data-bill-id', bill.Id));
+                            row.append(actions);
+                            $('#invoiceTable tbody').append(row);
+                            // مسح حقول النموذج بعد إضافة الفاتورة
+                            $('#billForm')[0].reset();
+                                            location.reload(); // Reload the page to show the updated list of bills
+
+                        }
+
+                        else {
+                            alert('فشل إنشاء الفاتورة.');
+                        }
+                    },
+                    error: function () {
+                        alert('حدث خطأ أثناء إرسال الفاتورة.');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.delete-btn').on('click', function () {
+                var btn = $(this);
+                bootbox.confirm({
+                    message: "Are you sure you want to delete this bill?",
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn-danger'
+                        },
+                        cancel: {
+                            label: 'No',
+                            className: 'btn-outline-secondary'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: '@Url.Action("DeleteBill", "Bill")/' + btn.data('bill-id'),
+                                type: 'POST', // Use POST method
+                                dataType: 'json',
+                                success: function (data) {
+                                    if (data.success) {
+                                        var itemContainer = btn.parents('tr');
+                                        itemContainer.addClass('animate_animated animate_zoomOut');
+                                        setTimeout(function () {
+                                            itemContainer.remove();
+                                        }, 1000);
+                                        toastr.success('Bill deleted successfully');
+                                    } else {
+                                        toastr.error('Failed to delete bill');
+                                    }
+                                },
+                                error: function () {
+                                    toastr.error('Failed to delete bill');
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        });
+        </Script>
+        <script>
+        $('input[name="paymentStatus"]').change(function () {
+                var paymentStatus = $('input[name="paymentStatus"]:checked').val();
+                if (paymentStatus === 'Paid') {
+                    $('#submitBtn').addClass('btn-success').removeClass('btn-primary').text('تم الدفع');
+                } else {
+                    $('#submitBtn').addClass('btn-primary').removeClass('btn-success').text('إنشاء الفاتورة');
+                }
+            });
+        });
+
+</script>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $('.send-whatsapp').click(function () {
+            var billId = $(this).data('bill-id');
+            $.ajax({
+                url: '@Url.Action("SendBillViaWhatsApp", "Bill")',
+                type: 'POST',
+                data: { billId: billId },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.success) {
+                        alert('تم إرسال الفاتورة عبر WhatsApp بنجاح');
+                    } else {
+                        alert('فشل في إرسال الفاتورة عبر WhatsApp: ' + data.message);
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+ 
+}
+*@

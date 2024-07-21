@@ -1,0 +1,191 @@
+﻿@using Station.ViewModel
+@model BillViewModel
+@{
+    Layout = "_Layout";
+}
+
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-12 mb-2 mt-1">
+                <div class="breadcrumbs-top">
+                    <div class="breadcrumb-wrapper d-none d-sm-block">
+                        <ol class="breadcrumb p-0 mb-0 pl-1">
+                            <li class="breadcrumb-item"><a href="index.html"><i class="bx bx-home-alt"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">الفواتير</a></li>
+                            <li class="breadcrumb-item active">الاضافة</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section id="horizontal-vertical">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Repeating Forms</h4>
+                        </div>
+                        <div class="card-body">
+                            <form id="billForm" method="post" asp-action="GetBillDetails">
+                                <div class="row mb-3">
+                                    <div class="col-md-3">
+                                        <label for="pointId" class="form-label">النقاط</label>
+                                        <select class="form-control" id="pointId" name="pointId">
+                                            <option value="">اختر النقطة</option>
+                                            @foreach (var item in Model.Items)
+                                            {
+                                                <option value="@item.Id">@item.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="meterId" class="form-label">العداد</label>
+                                        <select class="form-control" id="meterId" name="meterId">
+                                            <option value="">اختر العداد</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-2">
+                                        <label for="subscriberId" class="form-label">رقم المشترك</label>
+                                        <input asp-for="subscriberId" class="form-control" id="subscriberId" name="subscriberId" readonly>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="currentReading" class="form-label">القراءة الحالية</label>
+                                        <input type="text" class="form-control" id="currentReading" name="currentReading" readonly>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="previousReading" class="form-label">القراءة السابقة</label>
+                                        <input type="text" class="form-control" id="previousReading" name="previousReading" readonly>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="consumptionDifference" class="form-label">كمية الاستهلاك</label>
+                                        <input type="text" class="form-control" id="consumptionDifference" name="consumptionDifference" readonly>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="consumptionCost" class="form-label">قيمة الاستهلاك</label>
+                                        <input type="text" class="form-control" id="consumptionCost" name="consumptionCost" readonly>
+                                    </div> <div class="col-md-2">
+                                        <label for="subscriptionType" class="form-label">قيمة الاستهلاك</label>
+                                    <input type="text" class="form-control" id="subscriptionType" name="subscriptionType" readonly>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary" id="generateBill">اضافة الفاتورة</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+              <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Include jQuery (required by toastr) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Include toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
+       <script>
+        $(document).ready(function () {
+            $('#pointId').change(function () {
+                var pointId = $(this).val();
+                if (pointId) {
+                    $.ajax({
+                        url: '@Url.Action("GetMeter", "Bill")',
+                        data: { pointId: pointId },
+                        success: function (data) {
+                            var meterDropdown = $('#meterId');
+                            meterDropdown.empty();
+                            meterDropdown.append($('<option></option>').val('').text('اختر العداد'));
+                            $.each(data, function (index, item) {
+                                meterDropdown.append($('<option></option>').val(item.value).text(item.text));
+                            });
+                        }
+                    });
+                } else {
+                    $('#meterId').empty();
+                    $('#meterId').append($('<option></option>').val('').text('اختر العداد'));
+                }
+            });
+
+            $('#meterId').change(function () {
+                var meterId = $(this).val();
+                if (meterId) {
+                    $.ajax({
+                        url: '@Url.Action("GetBillDetails", "Bill")',
+                        data: { meterId: meterId },
+                        type: 'POST',
+                        dataType: 'json',
+                        success: function (data) {
+                            $('#subscriberId').val(data.subscriberId);
+                            $('#currentReading').val(data.currentReading);
+                            $('#previousReading').val(data.previousReading);
+                            $('#subscriptionType').val(data.subscriptionType);
+                            $('#consumptionDifference').val(data.consumptionDifference);
+                            $('#consumptionCost').val(data.consumptionCost.toFixed(2));
+                        }
+                    });
+                } else {
+                    $('#subscriberId').val('');
+                    $('#currentReading').val('');
+                    $('#previousReading').val('');
+                    $('#subscriptionType').val('');
+                    $('#consumptionDifference').val('');
+                    $('#consumptionCost').val('');
+                }
+            });
+           
+            $('#billForm').submit(function (event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    url: '@Url.Action("SubmitBill", "Bill")',
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.success) {
+                        location.reload();
+
+                            var bill = data.bill;
+                            var row = $('<tr>');
+                            row.append($('<td>').text(bill.subscriberId));
+                            row.append($('<td>').text(bill.CurrentReading));
+                            row.append($('<td>').text(bill.ConsumptionDifference));
+                            row.append($('<td>').text(new Date(bill.BillDate).toLocaleDateString()));
+                            row.append($('<td>').text(bill.PreviousReading));
+                            row.append($('<td>').text(bill.ConsumptionCost.toFixed(2)));
+                            row.append($('<td>').text(bill.IsPaid ? 'نعم' : 'لا'));
+                            var actions = $('<td>');
+                            actions.append($('<a>').addClass('btn btn-warning btn-sm edit-btn').text('تعديل').attr('href', '@Url.Action("EditBill", "Bill")/' + bill.Id));
+                            actions.append($('<button>').addClass('btn btn-danger btn-sm delete-btn').text('حذف').attr('data-bill-id', bill.Id));
+                            row.append(actions);
+                            $('#invoiceTable tbody').append(row);
+                            // مسح حقول النموذج بعد إضافة الفاتورة
+                            $('#billForm')[0].reset();
+                                            location.reload(); // Reload the page to show the updated list of bills
+
+                        }
+
+                        else {
+                            alert('فشل إنشاء الفاتورة.');
+                        }
+                    },
+                    error: function () {
+                        alert('حدث خطأ أثناء إرسال الفاتورة.');
+                    }
+                });
+            });
+        });
+    </script>
+
+}

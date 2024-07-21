@@ -1,0 +1,93 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "تسجيل";
+}
+
+<body class="vertical-layout vertical-menu-modern boxicon-layout no-card-shadow 1-column navbar-sticky footer-static bg-full-screen-image blank-page" data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="content-wrapper">
+            <div class="content-header row"></div>
+            <div class="content-body">
+                <!-- register section starts -->
+                <section class="row flexbox-container">
+                    <div class="col-xl-8 col-10">
+                        <div class="card bg-authentication mb-0">
+                            <div class="row m-0">
+                                <!-- register section left -->
+                                <div class="col-md-6 col-12 px-0">
+                                    <div class="card disable-rounded-right mb-0 p-2 h-100 d-flex justify-content-center">
+                                        <div class="card-header pb-1">
+                                            <div class="card-title">
+                                                <h4 class="text-center mb-2">تسجيل</h4>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <p><small>يرجى إدخال تفاصيل التسجيل لتكون جزءًا من مجتمعنا الرائع</small></p>
+                                        </div>
+                                        <div class="card-body">
+                                            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                                                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                                                <div class="form-row">
+                                                    <div class="form-group mb-50">
+                                                        <label class="text-bold-600" asp-for="Input.Email">البريد الإلكتروني</label>
+                                                        <input asp-for="Input.Email" class="form-control" placeholder="البريد الإلكتروني" />
+                                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="form-group mb-2">
+                                                        <label class="text-bold-600" asp-for="Input.Password">كلمة المرور</label>
+                                                        <input asp-for="Input.Password" class="form-control" placeholder="كلمة المرور" />
+                                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="form-group mb-50">
+                                                        <label class="text-bold-600" asp-for="Input.ConfirmPassword">تأكيد كلمة المرور</label>
+                                                        <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="تأكيد كلمة المرور" />
+                                                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                                    </div>
+                                                    <div class="form-group mb-50">
+                                                        <label class="text-bold-600" asp-for="Input.phone">الهاتف</label>
+                                                        <input asp-for="Input.phone" class="form-control" placeholder="رقم الهاتف" />
+                                                        <span asp-validation-for="Input.phone" class="text-danger"></span>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary glow position-relative w-100">إنشاء حساب<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
+                                                </div>
+                                            </form>
+                                            <hr>
+                                            <div class="text-center"><small class="mr-25">هل لديك حساب بالفعل؟</small><a asp-page="./Login"><small>تسجيل الدخول</small></a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- image section right -->
+                                <div class="col-md-6 d-md-block d-none text-center align-self-center p-3">
+                                    <img class="img-fluid" src="~/app-assets/images/pages/register.png" alt="branding logo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- register section ends -->
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="~/app-assets/vendors/js/vendors.min.js"></script>
+    <script src="~/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.js"></script>
+    <script src="~/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js"></script>
+    <script src="~/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="~/app-assets/js/core/app-menu.js"></script>
+    <script src="~/app-assets/js/core/app.js"></script>
+    <script src="~/app-assets/js/scripts/components.js"></script>
+    <script src="~/app-assets/js/scripts/footer.js"></script>
+    <!-- END: Theme JS-->
+</body>

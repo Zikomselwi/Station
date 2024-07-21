@@ -1,0 +1,149 @@
+@model Meter
+{
+    Layout = "_Layout";
+}
+
+<div class="app-content content">
+	<div class="content-overlay"></div>
+	<div class="content-wrapper">
+		<div class="content-header row">
+			<div class="content-header-left col-12 mb-2 mt-1">
+				<div class="breadcrumbs-top">
+					<div class="breadcrumb-wrapper d-none d-sm-block">
+						<ol class="breadcrumb p-0 mb-0 pl-1">
+							<li class="breadcrumb-item">
+								<a href="index.html"><i class="bx bx-home-alt"></i></a>
+							</li>
+							<li class="breadcrumb-item">
+								<a asp-action="Index">الفروع</a>
+							</li>
+							<li class="breadcrumb-item active">
+								صفحة الاضافة
+							</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-header">
+				<h3 class="card-title">إضافة نقطة جديد</h3>
+			</div>
+			<div class="card-body mt-2">
+				<form asp-action="Create" class="wizard-horizontal wizard clearfix" role="application" id="steps-uid-0">
+					<!-- Step 1 end-->
+					<!-- body content step 1 -->
+					<fieldset id="steps-uid-0-p-0" role="tabpanel" aria-labelledby="steps-uid-0-h-0" class="body">
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label asp-for="ItemId">النقطة</label>
+									<select  asp-for="ItemId" class="form-control" asp-items=" ViewBag.ItemId">
+										<option value="">Select</option>
+
+									</select>
+								</div>
+							</div>
+
+							<div class="col-sm-6">
+								<div class="form-group">
+
+									<label asp-for="Name" class="control-label"> الاسم </label>
+
+									<input asp-for="Name" class="form-control" id="lastName12" placeholder="ادخل الاسم ">
+									<span asp-validation-for="Name" class="text-danger"></span>
+
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+
+									<label asp-for="numberMeter" class="control-label"> الرقم </label>
+
+									<input asp-for="numberMeter" class="form-control" id="lastName12" placeholder="ادخل  الرقم">
+									<span asp-validation-for="numberMeter" class="text-danger"></span>
+
+								</div>
+							</div><div class="col-sm-6">
+								<div class="form-group">
+
+									<label asp-for="price" class="control-label"> السعر </label>
+
+									<input asp-for="price" class="form-control" id="lastName12" placeholder="ادخل السعر  ">
+									<span asp-validation-for="price" class="text-danger"></span>
+
+								</div>
+							</div>
+							
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label asp-for="dateTime">تاريخ الاضافة </label>
+									<input ASP-for="dateTime" class="form-control" id="emailAddress1" placeholder="ادخل تاريخ الاضافة">
+									<span asp-validation-for="dateTime" class="text-danger"></span>
+
+								</div>
+							</div>
+
+
+							<div class="col-sm-6">
+								<div class="form-group">
+									<button type="submit" class="btn btn-primary glow mr-1 mb-1" style="width:150px">حفظ</button>
+
+									&nbsp;
+									<a asp-action="Index" asp-controller="Reading" class="btn btn-light glow mr-1 mb-1" style="width:150px"> رجوع</a>
+
+
+
+								</div>
+							</div>
+						</div>
+
+					</fieldset>
+
+
+
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+                          
+                            @section Scripts{
+
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+    <script>
+        $(document).ready(function() {
+            $('#PointId').change(function() {
+            var pointId = $(this).val();
+            if (pointId)
+            {
+                    $.ajax({
+                url: '@Url.Action("GetMeters", "Reading")',
+                        data: { pointId: pointId },
+                        success: function(data) {
+                        var meterDropdown = $('#MeterId');
+                        meterDropdown.empty();
+                        meterDropdown.append($('<option></option>').val('').text('Select a Meter'));
+                            $.each(data, function(index, item) {
+                            meterDropdown.append($('<option></option>').val(item.value).text(item.text));
+                        });
+                    }
+                });
+            }
+            else
+            {
+                    $('#MeterId').empty();
+                    $('#MeterId').append($('<option></option>').val('').text('Select a Meter'));
+            }
+        });
+    });
+    </script >
+}
+

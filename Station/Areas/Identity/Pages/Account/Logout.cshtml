@@ -1,0 +1,25 @@
+﻿@page
+@model LogoutModel
+@{
+    ViewData["Title"] = "Log out";
+}
+
+<ul class="navbar-nav ml-auto">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li class="nav-item">
+            <form id="logoutForm" method="post" asp-area="Identity" asp-page="/Account/Logout" class="form-inline">
+                <button type="submit" class="nav-link btn btn-link text-dark">تسجيل الخروج</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-page="/Account/Login">دخول</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-page="/Account/Register">تسجيل</a>
+        </li>
+    }
+</ul>

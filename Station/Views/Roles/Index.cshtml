@@ -1,0 +1,76 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<IdentityUser>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-12 mb-2 mt-1">
+                <div class="breadcrumbs-top">
+                    <div class="breadcrumb-wrapper d-none d-sm-block">
+                        <ol class="breadcrumb p-0 mb-0 pl-1">
+                            <li class="breadcrumb-item">
+                                <a asp-action="Index" asp-controller="Home"><i class="bx bx-home-alt"></i></a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                الرولز
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-body">
+            <section id="column-selectors">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">
+                                    إدارة الرولز
+                                </h4>
+                                <!-- Add any action buttons here -->
+                            </div>
+                            <div class="card-body card-dashboard">
+                                <div class="table-responsive">
+                                    <table class="table table-striped dataex-html5-selectors">
+                                        <thead>
+                                            <tr>
+                                                <th>اسم الرول</th>
+                                                <th>الوصف</th>
+                                                <th>العمليات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var role in Model)
+                                            {
+                                                <tr>
+                                                    <td>@role.Email</td>
+                                                    <td>@role.UserName</td>
+                                                    <td>
+                                                        <!-- Example of action buttons -->
+                                                        <a asp-controller="Roles" asp-action="addRoles" asp-route-userId="@role.Id" class="btn btn-sm btn-primary">
+                                                            <i class="bi bi-pencil"></i> تعديل
+                                                        </a>
+                                                        <a asp-controller="Roles" asp-action="Delete" asp-route-id="@role.Id" class="btn btn-sm btn-danger">
+                                                            <i class="bi bi-trash"></i> حذف
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+

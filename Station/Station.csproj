@@ -1,0 +1,133 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Remove="wwwroot\assets\toastr.js\toastr.min.css" />
+	</ItemGroup>
+
+	<ItemGroup>
+				<PackageReference Include="Bot.Builder.Community.Adapters.Infobip.Core" Version="4.13.5" />
+				<PackageReference Include="FluentSms.Infobip" Version="1.0.3" />
+				<PackageReference Include="Infobip.Api.Client" Version="2.1.3" />
+				<PackageReference Include="Infobip.Api.Client.NetStandard" Version="1.0.1" />
+				<PackageReference Include="infobip.push" Version="1.0.3" />
+				<PackageReference Include="MAVN.Service.SmsProviderInfobip.Contract" Version="1.1.0" />
+				<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.29" />
+				<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.29" />
+				<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+				<PackageReference Include="Microsoft.SqlServer.Server" Version="1.0.0" />
+				<PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
+		<PackageReference Include="AWSSDK.SQS" Version="3.7.301.27" />
+		<PackageReference Include="Infobip.Api.SDK" Version="1.0.3" />
+		<PackageReference Include="DinkToPdf" Version="1.0.8" />
+		<PackageReference Include="HtmlRenderer.PdfSharp" Version="1.5.0.6" />
+		<PackageReference Include="HtmlRendererCore.PdfSharp" Version="1.0.5" />
+		<PackageReference Include="iTextSharp" Version="5.5.13.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.29" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.29" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.DataAnnotations" Version="2.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.32" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.32">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.17" />
+		<PackageReference Include="PDFsharp" Version="6.1.1" />
+		<PackageReference Include="PDFsharp-MigraDoc" Version="6.1.1" />
+		<PackageReference Include="PDFsharp-MigraDoc-GDI" Version="6.1.1" />
+		<PackageReference Include="PDFSharp.NetStandard2" Version="1.51.5185.3" />
+		<PackageReference Include="PDFSharp.Standard" Version="1.51.15" />
+		<PackageReference Include="PdfSharpCore" Version="1.3.63" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="wwwroot\images\" />
+	</ItemGroup>
+
+	
+	<ItemGroup>
+		<None Include="Areas\Employees\Views\Employees\Create.cshtml" />
+		<None Include="Areas\Employees\Views\Employees\Delete.cshtml" />
+		<None Include="Areas\Employees\Views\Employees\Details.cshtml" />
+		<None Include="Areas\Employees\Views\Employees\Edit.cshtml" />
+		<None Include="Areas\Employees\Views\Employees\Index.cshtml" />
+		<None Include="Areas\Employees\Views\Home\Index.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\AccessDenied.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\ConfirmEmail.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\ConfirmEmailChange.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\ExternalLogin.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\ForgotPassword.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\ForgotPasswordConfirmation.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Lockout.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Login.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\LoginWith2fa.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\LoginWithRecoveryCode.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Logout.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Manage\ChangePassword.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Manage\DeletePersonalData.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Manage\Disable2fa.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Manage\DownloadPersonalData.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Manage\Email.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Manage\EnableAuthenticator.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Manage\ExternalLogins.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Manage\GenerateRecoveryCodes.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Manage\Index.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Manage\PersonalData.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Manage\ResetAuthenticator.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Manage\SetPassword.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Manage\ShowRecoveryCodes.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Manage\TwoFactorAuthentication.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Manage\_Layout.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Manage\_StatusMessage.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\Register.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\RegisterConfirmation.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\ResendEmailConfirmation.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\ResetPassword.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\_StatusMessage.cshtml" />
+		<None Include="Areas\Identity\Pages\Account\_ViewImports.cshtml" />
+		<None Include="Views\Reports\Index.cshtml" />
+		<None Include="Views\Roles\addRoles.cshtml" />
+		<None Include="Views\Roles\Index.cshtml" />
+		<None Include="wwwroot\assets\img\arrow.svg" />
+		<None Include="wwwroot\assets\img\icons\award-icon-01.svg" />
+		<None Include="wwwroot\assets\img\icons\award-icon-02.svg" />
+		<None Include="wwwroot\assets\img\icons\award-icon-03.svg" />
+		<None Include="wwwroot\assets\img\icons\award-icon-04.svg" />
+		<None Include="wwwroot\assets\img\icons\buliding-icon.svg" />
+		<None Include="wwwroot\assets\img\icons\dash-icon-01.svg" />
+		<None Include="wwwroot\assets\img\icons\dash-icon-02.svg" />
+		<None Include="wwwroot\assets\img\icons\dash-icon-03.svg" />
+		<None Include="wwwroot\assets\img\icons\dash-icon-04.svg" />
+		<None Include="wwwroot\assets\img\icons\header-icon-01.svg" />
+		<None Include="wwwroot\assets\img\icons\header-icon-04.svg" />
+		<None Include="wwwroot\assets\img\icons\header-icon-05.svg" />
+		<None Include="wwwroot\assets\img\icons\invoices-icon1.svg" />
+		<None Include="wwwroot\assets\img\icons\invoices-icon2.svg" />
+		<None Include="wwwroot\assets\img\icons\invoices-icon3.svg" />
+		<None Include="wwwroot\assets\img\icons\invoices-icon4.svg" />
+		<None Include="wwwroot\assets\img\icons\lesson-icon-01.svg" />
+		<None Include="wwwroot\assets\img\icons\lesson-icon-02.svg" />
+		<None Include="wwwroot\assets\img\icons\lesson-icon-03.svg" />
+		<None Include="wwwroot\assets\img\icons\lesson-icon-04.svg" />
+		<None Include="wwwroot\assets\img\icons\lesson-icon-05.svg" />
+		<None Include="wwwroot\assets\img\icons\lesson-icon-06.svg" />
+		<None Include="wwwroot\assets\img\icons\social-icon-01.svg" />
+		<None Include="wwwroot\assets\img\icons\social-icon-02.svg" />
+		<None Include="wwwroot\assets\img\icons\social-icon-03.svg" />
+		<None Include="wwwroot\assets\img\icons\social-icon-04.svg" />
+		<None Include="wwwroot\assets\img\icons\student-icon-01.svg" />
+		<None Include="wwwroot\assets\img\icons\student-icon-02.svg" />
+		<None Include="wwwroot\assets\img\icons\teacher-icon-01.svg" />
+		<None Include="wwwroot\assets\img\icons\teacher-icon-02.svg" />
+		<None Include="wwwroot\assets\img\icons\teacher-icon-03.svg" />
+	</ItemGroup>
+</Project>

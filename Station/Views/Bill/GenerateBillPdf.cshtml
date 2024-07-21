@@ -1,0 +1,63 @@
+﻿@model Station.Models.Bill
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Bill Details</title>
+    <style>
+        .header {
+            text-align: center;
+        }
+        .content {
+            margin: 20px;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table th, .table td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Bill Details</h1>
+    </div>
+    <div class="content">
+        <table class="table">
+            <tr>
+                <th>Number Bill</th>
+                <td>@Model.numberbill</td>
+            </tr>
+            <tr>
+                <th>Subscriber Name</th>
+                <td>@Model.Subscriber.FullName</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>@Model.BillDate.ToString("yyyy-MM-dd")</td>
+            </tr>
+            <tr>
+                <th>Current Reading</th>
+                <td>@Model.CurrentReading</td>
+            </tr>
+            <tr>
+                <th>Previous Reading</th>
+                <td>@Model.PreviousReading</td>
+            </tr>
+            <tr>
+                <th>Cost Reading</th>
+                <td>@Model.ConsumptionCost</td>
+            </tr>
+            <tr>
+                <th>Subscription Type</th>
+                <td>@Model.SubscriptionType</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

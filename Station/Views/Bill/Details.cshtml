@@ -1,0 +1,85 @@
+﻿@using Station.ViewModel
+@model BillViewModel
+@{
+    ViewData["-ms-high-contrast-adjust"] = "تفاصيل الفاتورة";
+    Layout = "_Layout";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+
+<h2 class="text-center my-4">تفاصيل الفاتورة</h2>
+
+<div class="container">
+    <div class="card shadow mx-auto" style="max-width: 600px; max-height: 500px;">
+        <div class="card-header bg-primary text-white text-center">
+            <h4 class="mb-0">تفاصيل الفاتورة</h4>
+        </div>
+        <div class="card-body" style="font-size: 17px;">
+            <div class="row">
+                <div class="col-12">
+                    <dl class="row text-center">
+                        <dt class="col-sm-6">نوع الاشتراك</dt>
+                        <dd class="col-sm-6">@Model.SubscriptionType</dd>
+
+                        <dt class="col-sm-6">رقم الفاتورة</dt>
+                        <dd class="col-sm-6">@Model.numberbill</dd>
+
+                        <dt class="col-sm-6">اسم المشترك</dt>
+                        <dd class="col-sm-6">@Model.SubscriberName</dd> <!-- Updated line -->
+
+                        <dt class="col-sm-6">القراءة الحالية</dt>
+                        <dd class="col-sm-6">@Model.CurrentReading</dd>
+                        
+                        @if(@Model.PreviousReading != null)
+                        {
+                            <dt class="col-sm-6">القراءة السابقة</dt>
+                            <dd class="col-sm-6">@Model.PreviousReading</dd>
+                        }
+                        else
+                        {
+                            <dt class="col-sm-6">القراءة السابقة</dt>
+                            <dd class="col-sm-6">-----</dd>
+                        }
+
+                        <dt class="col-sm-6">فرق الاستهلاك</dt>
+                        <dd class="col-sm-6">@Model.ConsumptionDifference</dd>
+
+                        <dt class="col-sm-6">تكلفة الاستهلاك</dt>
+                        <dd class="col-sm-6">@Model.ConsumptionCost</dd>
+                    </dl>
+                </div>
+                
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <button type="button" class="btn btn-primary" id="printInvoiceBtn">طباعة الفاتورة</button>
+            <a href="@Url.Action("Index", "Bill")" class="btn btn-secondary">العودة</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/assets/sweetalert2/sweetalert2.all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#printInvoiceBtn').click(function () {
+                $.ajax({
+                    url: '/Bill/PrintInvoice',
+                    type: 'POST',
+                    data: { id: '@Model.Id' },
+                    success: function (response) {
+                        var printWindow = window.open();
+                        printWindow.document.write(response);
+                        printWindow.print();
+                        printWindow.close();
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error('حدث خطأ أثناء طباعة الفاتورة', 'خطأ');
+                    }
+                });
+            });
+        });
+    </script>
+}

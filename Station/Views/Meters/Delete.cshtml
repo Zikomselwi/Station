@@ -1,0 +1,92 @@
+﻿@model Station.Models.Meter
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+<div class="page-wrapper">
+<div class="content container-fluid">
+
+<div class="page-header">
+<div class="row align-items-center">
+<div class="col-sm-12">
+<div class="page-sub-header">
+<h3 class="page-title">حذف عداد</h3>
+<ul class="breadcrumb">
+<li class="breadcrumb-item"><a href="students.html">عداد</a></li>
+<li class="breadcrumb-item active"> عداد</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-sm-12">
+<div class="card comman-shadow">
+<div class="card-body">
+
+
+<h3>هل متاكد?</h3>
+<div>
+    <h4>Subscriber</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.numberMeter)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.dateTime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.price)
+        </dd>
+        
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
+
+@section Scripts {
+
+    <script>
+
+
+$(document).ready(function() {
+  $('.delete-btn').click(function() {
+    var itemId = $(this).data('id');
+    $('#deleteModal').data('item-id', itemId).modal('show');
+  });
+
+  $('#deleteModal .btn-danger').click(function() {
+    var itemId = $('#deleteModal').data('item-id');
+    $.ajax({
+      url: '/Items/Delete/' + itemId,
+      type: 'POST',
+      headers: {
+        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+      },
+      success: function() {
+        // Optionally, you can update the UI to reflect the deletion
+        $('#item-' + itemId).remove();
+        $('#deleteModal').modal('hide');
+      },
+      error: function() {
+        alert('Error deleting the item.');
+      }
+    });
+  });
+
+  $('#deleteModal').on('hidden.bs.modal', function() {
+    $(this).data('item-id', null);
+  });
+});
+</script>
+}

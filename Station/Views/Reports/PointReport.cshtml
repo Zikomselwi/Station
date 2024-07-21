@@ -1,0 +1,73 @@
+﻿@model Station.ViewModel.ReportViewModel
+
+<h2>تقرير للنقطة: @Model.PointsReport.FirstOrDefault()?.PointName</h2>
+
+
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col-sm-12">
+                    <div class="page-sub-header">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="@Url.Action("Index", "Reports")">التقارير</a>
+                            </li>
+                            <li class="breadcrumb-item">تقرير النقاط</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card comman-shadow">
+                    <div class="card-body">
+                        <div class="text-end mb-4">
+<button onclick="printReport()">Print Report</button>
+                        </div>
+                        <div class="table-responsive" dir="rtl">
+                            <table class="table table-center">
+    <thead>
+        <tr>
+            <th>اسم النقطة</th>
+            <th>إجمالي المبالغ المحصلة</th>
+            <th>إجمالي المشتركين</th>
+            <th>إجمالي الفواتير المسددة</th>
+            <th>إجمالي الفواتير الغير مسددة</th>
+            <th>إجمالي العدادات</th>
+            <th>عدد المشتركين الموقوفين</th>
+        </tr>
+    </thead>
+    <tbody>
+      @foreach (var point in Model.PointsReport)
+{
+    <tr>
+        <td>@point.PointName</td>
+        <td>@point.TotalAmountCollected.ToString("N2")</td>
+        <td>@point.TotalSubscribers</td>
+        <td>@point.TotalBillsPaid</td>
+        <td>@point.TotalBillsUnpaid</td>
+        <td>@point.TotalMeters</td>
+        <td>@point.InactiveSubscribers</td>
+        <td>
+            <a href="@Url.Action("PointReport", new { itemId = point.PointId })">عرض التقرير</a> |
+        </td>
+    </tr>
+}
+
+        }
+    </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>

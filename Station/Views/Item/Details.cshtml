@@ -1,0 +1,46 @@
+﻿@model Station.Models.Item
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Subscriber</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model =>model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Point.NamePoint)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model =>model.Point.NamePoint)
+        </dd>
+        
+       
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Number_phone)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model =>model.Number_phone)
+        </dd>
+        @*<dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Subscriber.)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Subscriber)
+        </dd>
+      
+*@        
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,275 @@
+﻿@*
+@{
+   
+    Layout = "_Layout";
+
+    ViewData["Title"] = "Index";
+}
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-12 mb-2 mt-1">
+                <div class="breadcrumbs-top">
+                    <div class="breadcrumb-wrapper d-none d-sm-block">
+                        <ol class="breadcrumb p-0 mb-0 pl-1">
+                            <li class="breadcrumb-item"><a href="index.html"><i class="bx bx-home-alt"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">الفواتير</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+          <section id="horizontal-vertical">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Scroll - horizontal and vertical</h4>
+                                </div>
+                                <div class="card-body card-dashboard">
+                                     <div class="heading-elements">
+                            <ul class="list-inline mb-0 d-flex align-items-center">
+                           
+                                  <li><a  href="@Url.Action("Create", "Bill")"> اضــافــــة</a></li>
+                            </ul>
+                        </div>
+                                    <div class="table-responsive">
+                                        <table class="table nowrap scroll-horizontal-vertical">
+                                            <thead>
+                                        <tr>
+                                            <th>اسم المشترك</th>
+                                            <th>القراءة الحالية</th>
+                                            <th>كمية الاستهلاك</th>
+                                            <th>تاريخ الفاتورة</th>
+                                            <th>القراءة السابقة</th>
+                                            <th>تكلفة الاستهلاك</th>
+                                            <th>حالة الدفع</th>
+                                            <th>إجراءات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var bill in Model.Bills)
+                                        {
+                                            <tr>
+                                                <td>@bill.SubscriberName</td>
+                                                <td>@bill.CurrentReading</td>
+                                                <td>@bill.ConsumptionDifference</td>
+                                                <td>@bill.BillDate.ToShortDateString()</td>
+                                                <td>@bill.PreviousReading</td>
+                                                <td>@bill.ConsumptionCost</td>
+                                                <td class="payment-status">
+                                                    @if (bill.IsPaid)
+                                                    {
+                                                        <div class="badge badge-pill badge-success mr-1 mb-1">Success</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="badge badge-pill badge-danger mb-1">Danger</div>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0);" class="bx bx-send btn-sm send-whatsapp" data-bill-id="@bill.Id"></a>
+                                                    <a href="javascript:void(0);" class="bx bx-trash js-delete" data-bill-id="@bill.Id"></a>
+        <a href="javascript:void(0);" class="bx bx-edit mark-paid-btn" data-bill-id="@bill.Id"></a>
+                                                </td>
+                                            </tr>}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+    </div>
+    </div>
+    @section Scripts {
+          <script src="~/assets/sweetalert2/sweetalert2.all.js"></script>
+          <!-- Include jQuery (required by toastr) -->
+
+
+       <script>
+    
+            $('#billForm').submit(function (event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    url: '@Url.Action("SubmitBill", "Bill")',
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.success) {
+                        location.reload();
+
+                            var bill = data.bill;
+                            var row = $('<tr>');
+                            row.append($('<td>').text(bill.SubscriberName));
+                            row.append($('<td>').text(bill.CurrentReading));
+                            row.append($('<td>').text(bill.ConsumptionDifference));
+                            row.append($('<td>').text(new Date(bill.BillDate).toLocaleDateString()));
+                            row.append($('<td>').text(bill.PreviousReading));
+                            row.append($('<td>').text(bill.ConsumptionCost.toFixed(2)));
+                            row.append($('<td>').text(bill.IsPaid ? 'نعم' : 'لا'));
+                            var actions = $('<td>');
+                            actions.append($('<a>').addClass('btn btn-warning btn-sm edit-btn').text('تعديل').attr('href', '@Url.Action("EditBill", "Bill")/' + bill.Id));
+                            actions.append($('<button>').addClass('btn btn-danger btn-sm delete-btn').text('حذف').attr('data-bill-id', bill.Id));
+                            row.append(actions);
+                            $('#invoiceTable tbody').append(row);
+                            // مسح حقول النموذج بعد إضافة الفاتورة
+                            $('#billForm')[0].reset();
+                                            location.reload(); // Reload the page to show the updated list of bills
+
+                        }
+
+                        else {
+                            alert('فشل إنشاء الفاتورة.');
+                        }
+                    },
+                    error: function () {
+                        alert('حدث خطأ أثناء إرسال الفاتورة.');
+                    }
+                });
+            });
+        });
+    </script>
+<script>
+    $(document).ready(function () {
+        $('.js-delete').on('click', function () {
+            var btn = $(this);
+            Swal.fire({
+                title: 'هل أنت متأكد؟',
+                text: "بمجرد الحذف، لن تتمكن من استعادة هذا العنصر!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'نعم، احذفه!',
+                cancelButtonText: 'لا، إلغاء!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/Bill/DeleteBill/' + btn.data('bill-id'), // Adjust URL as per your routing
+                        type: 'POST', // Use POST method
+                        dataType: 'json',
+                        success: function () {
+                            var itemContainer = btn.closest('tr'); // Find closest table row
+                            itemContainer.addClass('animate__animated animate__zoomOut');
+                            setTimeout(function () {
+                                itemContainer.remove(); // Remove table row after animation
+                            }, 1000);
+                            Swal.fire(
+                                'تم الحذف!',
+                                'تم حذف العنصر بنجاح.',
+                                'success'
+                            );
+                        },
+                        error: function () {
+                            Swal.fire(
+                                'خطأ!',
+                                'حدث خطأ ما!',
+                                'error'
+                            );
+                        }
+                    });
+                } else {
+                    Swal.fire(
+                        'تم الإلغاء',
+                        'العنصر الخاص بك في أمان!',
+                        'info'
+                    );
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.mark-paid-btn').on('click', function () {
+            var btn = $(this);
+            Swal.fire({
+                title: 'هل أنت متأكد؟',
+                text: "هل تريد حقا وضع علامة مدفوعة على هذا الفاتورة؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'نعم، ادفعها!',
+                cancelButtonText: 'لا، إلغاء!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/Bill/MarkAsPaid', // Adjust URL as per your routing
+                        type: 'POST', // Use POST method
+                        data: { id: btn.data('bill-id') }, // Ensure data parameter name matches controller action
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.success) {
+                                var itemContainer = btn.closest('tr'); // Find closest table row
+                                itemContainer.addClass('animate__animated animate__zoomOut');
+                                setTimeout(function () {
+                                    Swal.fire(
+                                        'تم الدفع!',
+                                        'تم وضع علامة مدفوعة على الفاتورة بنجاح.',
+                                        'success'
+                                    ).then(() => {
+                                        location.reload(); // Refresh the page
+                                    });
+                                }, 1000);
+                            } else {
+                                Swal.fire(
+                                    'خطأ!',
+                                    'حدث خطأ ما أثناء وضع علامة المدفوعة على الفاتورة.',
+                                    'error'
+                                );
+                            }
+                        },
+                        error: function () {
+                            Swal.fire(
+                                'خطأ!',
+                                'حدث خطأ ما!',
+                                'error'
+                            );
+                        }
+                    });
+                } else {
+                    Swal.fire(
+                        'تم الإلغاء',
+                        'الفاتورة الخاصة بك لم يتم وضع علامة المدفوعة عليها!',
+                        'info'
+                    );
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $('.send-whatsapp').click(function () {
+            var billId = $(this).data('bill-id');
+            $.ajax({
+                url: '@Url.Action("SendBillViaWhatsApp", "Bill")',
+                type: 'POST',
+                data: { billId: billId },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.success) {
+                        alert('تم إرسال الفاتورة عبر WhatsApp بنجاح');
+                    } else {
+                        alert('فشل في إرسال الفاتورة عبر WhatsApp: ' + data.message);
+                    }
+                }
+            });
+        });
+    });
+</script>
+}*@
